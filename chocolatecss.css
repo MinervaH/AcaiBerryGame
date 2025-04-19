@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  background: #f2e6d9;
+}
+
+#game {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("output-onlinetools-2.webp");
+  background-size: cover;
+}
+
+#player {
+  position: absolute;
+  font-size: 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.item {
+  position: absolute;
+  font-size: 32px;
+}
+
+#score, #timer {
+  position: absolute;
+  top: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  font-size: 18px;
+  z-index: 10;
+}
+
+#score { left: 10px; }
+#timer { right: 10px; }
