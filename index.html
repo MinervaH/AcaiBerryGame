@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acai Berry Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>🧒 撿巴西莓小遊戲</h1>
+
+  <div id="ui">
+    <div>⏳ 時間: <span id="timer">60</span></div>
+    <div>🍇 收集數: <span id="coins">0</span></div>
+  </div>
+
+  <div id="mineArea">
+    <div id="child">🧒</div>
+    <div id="berry">🍇</div>
+  </div>
+
+  <div id="game-over" class="hidden">
+    🛑 時間到！<br>
+    你總共收集了 <span id="final-coins">0</span> 顆巴西莓！
+  </div>
+  <script type="text/javascript" src="game.js"></script>
+</body>
+</html>
