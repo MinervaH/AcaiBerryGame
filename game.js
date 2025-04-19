@@ -1,6 +1,7 @@
 let coins = 0;
 let timeLeft = 60;
 let gameOver = false;
+var gameStatus = false;
 
 const child = document.getElementById("child");
 const berry = document.getElementById("berry");
@@ -10,6 +11,12 @@ const coinsDisplay = document.getElementById("coins");
 const gameOverText = document.getElementById("game-over");
 const finalCoins = document.getElementById("final-coins");
 const area = document.getElementById("mineArea");
+const startButton = document.getElementById("start");
+
+const leftButton = document.getElementById("left");
+const upButton = document.getElementById("up");
+const rightButton = document.getElementById("right");
+const downButton = document.getElementById("down");
 
 let childX = 0;
 let childY = 0;
@@ -17,13 +24,98 @@ let childSpeed = 20;
 
 let berryX = 100;
 let berryY = 100;
-let berryDX = 2;
-let berryDY = 2;
+let berryDX = 1.5;
+let berryDY = 1.5;
 
 let monsterX = 200;
 let monsterY = 200;
-let monsterDX = 2;
-let monsterDY = 2;
+let monsterDX = -1.5;
+let monsterDY = 1.5;
+
+startButton.addEventListener("click", (e) => {
+    if (gameStatus==false) {
+        berryX = Math.floor(Math.random() * 150);
+        berryY = Math.floor(Math.random() * 150);
+        berry.style.left = berryX + "px";
+        berry.style.top = berryY + "px";
+
+        monsterX = Math.floor(Math.random() * 250);
+        monsterY = Math.floor(Math.random() * 250);
+        monster.style.left = monsterX + "px";
+        monster.style.top = monsterY + "px";        
+
+        berry.style.display="block";
+        monster.style.display="block";
+
+        const countdown = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            clearInterval(gameAnimation);
+            gameOver = true;
+            finalCoins.textContent = coins;
+            gameOverText.style.display="block";
+        }
+        }, 1000);
+
+        const gameAnimation = setInterval(()=>{
+            moveBerryBouncing() 
+            moveMonsterBouncing() 
+            checkCollision();
+        },10);
+        gameStatus=true;
+    }
+    else{
+
+    }
+});
+
+
+leftButton.addEventListener("click", (e) => {
+    if (gameOver) return;
+
+    childX -= childSpeed;
+    if (childX < 0) {
+        childX = 0;
+    }  
+    child.style.left = childX + "px";
+
+});
+
+upButton.addEventListener("click", (e) => {
+    if (gameOver) return;
+
+    childY -= childSpeed;
+    if (childY < 0) {
+        childY = 0;
+    }
+    child.style.top = childY + "px";
+
+});
+
+rightButton.addEventListener("click", (e) => {
+    if (gameOver) return;
+    const maxX = area.clientWidth - child.offsetWidth;
+    childX += childSpeed;
+    if (childX > maxX) {
+        childX = maxX;
+    }
+    child.style.left = childX + "px";
+
+});
+
+downButton.addEventListener("click", (e) => {
+    if (gameOver) return;
+    const maxY = area.clientHeight - child.offsetHeight;
+    childY += childSpeed;
+    if (childY > maxY) {
+        childY = maxY;
+    }
+
+    child.style.top = childY + "px";    
+
+});
 
 document.addEventListener("keydown", (e) => {
   if (gameOver) return;
@@ -49,24 +141,19 @@ document.addEventListener("keydown", (e) => {
   // 邊界反彈效果
   if (childX < 0) {
     childX = 0;
-    childSpeed = -childSpeed;
   } else if (childX > maxX) {
     childX = maxX;
-    childSpeed = -childSpeed;
   }
 
   if (childY < 0) {
     childY = 0;
-    childSpeed = -childSpeed;
   } else if (childY > maxY) {
     childY = maxY;
-    childSpeed = -childSpeed;
   }
 
   child.style.left = childX + "px";
   child.style.top = childY + "px";
 
-  checkCollision();
 });
 
 function checkCollision() {
@@ -129,7 +216,7 @@ function moveBerryBouncing() {
   berry.style.top = berryY + "px";
 
   if (!gameOver) {
-    requestAnimationFrame(moveBerryBouncing);
+    //requestAnimationFrame(moveBerryBouncing);
   }
 }
 
@@ -147,25 +234,7 @@ function moveMonsterBouncing() {
   monster.style.top = monsterY + "px";
 
   if (!gameOver) {
-    requestAnimationFrame(moveMonsterBouncing);
+    //requestAnimationFrame(moveMonsterBouncing);
   }
 }
 
-// 初始化
-moveBerryRandom();
-moveMonsterRandom();
-moveBerryBouncing();
-moveMonsterBouncing();
-
-// 倒數計時
-const countdown = setInterval(() => {
-  timeLeft--;
-  timerDisplay.textContent = timeLeft;
-
-  if (timeLeft <= 0) {
-    clearInterval(countdown);
-    gameOver = true;
-    finalCoins.textContent = coins;
-    gameOverText.classList.remove("hidden");
-  }
-}, 1000);

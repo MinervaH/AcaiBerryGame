@@ -34,11 +34,13 @@ body {
 #berry {
   position: absolute;
   font-size: 39px;
+  display:none;
 }
 
 #monster {
   position: absolute;
   font-size: 39px;
+  display:none;
 }
 
 
@@ -49,14 +51,21 @@ body {
   margin-top: 10px;
 }
 
+#ui-bottom {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  margin-top: 10px;
+}
+
+#ui-bottom button{
+  width:20%;
+}
+
 #game-over {
   display: none;
   text-align: center;
   font-size: 24px;
   margin-top: 20px;
   color: red;
-}
-
-.hidden {
-  display: none;
 }

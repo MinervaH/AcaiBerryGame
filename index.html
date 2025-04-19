@@ -8,11 +8,12 @@
 </head>
 <body>
 
-  <h1>🧒 撿巴西莓小遊戲</h1>
+  <h1>🧒 採集巴西莓小遊戲</h1>
 
   <div id="ui">
     <div>⏳ 時間: <span id="timer">60</span></div>
-    <div>🍇 收集數: <span id="coins">0</span></div>
+    <div>🍇 採集數: <span id="coins">0</span></div>
+    <div><button id="start">開始採集</button></div>
   </div>
 
   <div id="mineArea">
@@ -21,9 +22,16 @@
     <div id="monster">👿</div>
   </div>
 
-  <div id="game-over" class="hidden">
+  <div id="ui-bottom">
+    <button id="left">左</button>
+    <button id="up">上</button>
+    <button id="right">右</button>
+    <button id="down">下</button>
+  </div>  
+
+  <div id="game-over">
     🛑 時間到！<br>
-    你總共收集了 <span id="final-coins">0</span> 顆巴西莓！
+    你總共採集了 <span id="final-coins">0</span> 顆巴西莓！
   </div>
   <script type="text/javascript" src="game.js"></script>
 </body>
