@@ -16,7 +16,7 @@ body {
   position: relative;
   width: 500px;
   height: 400px;
-  /*background-image: url('https://images.unsplash.com/photo-1590080876270-0744170c61e0'); /* 巴西莓背景圖 */
+  background-image: url('output-onlinetools.webp'); /* 巴西莓背景圖 */
   background-size: cover;
   border: 2px solid #ccc;
   margin-top: 20px;
@@ -35,6 +35,12 @@ body {
   position: absolute;
   font-size: 39px;
 }
+
+#monster {
+  position: absolute;
+  font-size: 39px;
+}
+
 
 #ui {
   display: flex;

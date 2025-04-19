@@ -4,6 +4,7 @@ let gameOver = false;
 
 const child = document.getElementById("child");
 const berry = document.getElementById("berry");
+const monster = document.getElementById("monster");
 const timerDisplay = document.getElementById("timer");
 const coinsDisplay = document.getElementById("coins");
 const gameOverText = document.getElementById("game-over");
@@ -18,6 +19,11 @@ let berryX = 100;
 let berryY = 100;
 let berryDX = 2;
 let berryDY = 2;
+
+let monsterX = 200;
+let monsterY = 200;
+let monsterDX = 2;
+let monsterDY = 2;
 
 document.addEventListener("keydown", (e) => {
   if (gameOver) return;
@@ -66,16 +72,28 @@ document.addEventListener("keydown", (e) => {
 function checkCollision() {
   const childRect = child.getBoundingClientRect();
   const berryRect = berry.getBoundingClientRect();
+  const monsterRect = monster.getBoundingClientRect();
 
   const dx = childRect.left - berryRect.left;
   const dy = childRect.top - berryRect.top;
   const distance = Math.sqrt(dx * dx + dy * dy);
+
+  const mdx = childRect.left - monsterRect.left;
+  const mdy = childRect.top - monsterRect.top;
+  const mdistance = Math.sqrt(mdx * mdx + mdy * mdy);
 
   if (distance < 60) {
     coins++;
     coinsDisplay.textContent = coins;
     moveBerryRandom();
   }
+
+  if (mdistance < 60) {
+    coins=coins-3;
+    coinsDisplay.textContent = coins;
+    moveMonsterRandom();
+  }
+
 }
 
 function moveBerryRandom() {
@@ -85,6 +103,15 @@ function moveBerryRandom() {
   berryY = Math.floor(Math.random() * maxY);
   berry.style.left = berryX + "px";
   berry.style.top = berryY + "px";
+}
+
+function moveMonsterRandom() {
+  const maxX = area.clientWidth - monster.offsetWidth;
+  const maxY = area.clientHeight - monster.offsetHeight;
+  monsterX = Math.floor(Math.random() * maxX);
+  monsterY = Math.floor(Math.random() * maxY);
+  monster.style.left = monsterX + "px";
+  monster.style.top = monsterY + "px";
 }
 
 // 巴西莓自動移動並反彈
@@ -106,9 +133,29 @@ function moveBerryBouncing() {
   }
 }
 
+function moveMonsterBouncing() {
+  const maxX = area.clientWidth - monster.offsetWidth;
+  const maxY = area.clientHeight - monster.offsetHeight;
+
+  monsterX += monsterDX;
+  monsterY += monsterDY;
+
+  if (monsterX <= 0 || monsterX >= maxX) monsterDX *= -1;
+  if (monsterY <= 0 || monsterY >= maxY) monsterDY *= -1;
+
+  monster.style.left = monsterX + "px";
+  monster.style.top = monsterY + "px";
+
+  if (!gameOver) {
+    requestAnimationFrame(moveMonsterBouncing);
+  }
+}
+
 // 初始化
 moveBerryRandom();
+moveMonsterRandom();
 moveBerryBouncing();
+moveMonsterBouncing();
 
 // 倒數計時
 const countdown = setInterval(() => {
